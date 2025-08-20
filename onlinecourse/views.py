@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.views import generic
 
 # <HINT> Import any new Models here
-from .models import Course, Enrollment
+from .models import Course, Enrollment, Submission
 
 if TYPE_CHECKING:
     from django.db.models import BaseManager
@@ -121,7 +121,17 @@ def enroll(request: HttpRequest, course_id: int) -> HttpResponse:
 # Collect the selected choices from exam form
 # Add each selected choice object to the submission object
 # Redirect to show_exam_result with the submission id
-# def submit(request, course_id):
+def submit(request: HttpRequest, course_id: int) -> HttpResponse:
+    course = get_object_or_404(Course, pk=course_id)
+    user = request.user
+    enrollment = Enrollment.objects.get(user=user, course=course)
+    submission = Submission.objects.create(enrollment=enrollment)
+    choices = extract_answers(request)
+    submission.choices.set(choices)
+    submission_id = submission.id  # pyright: ignore[reportAttributeAccessIssue]
+    return HttpResponseRedirect(
+        reverse(viewname="onlinecourse:exam_result", args=(course_id, submission_id)),
+    )
 
 
 # An example method to collect the selected choices from the exam form from the request object
