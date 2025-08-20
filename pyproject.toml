@@ -24,14 +24,20 @@ exclude = ["migrations"]
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
+    "BLE001",
     "D100",
     "D101",
+    "D102",
     "D103",
     "D104",
     "D105",
+    "ERA001",
     "DTZ011",
     "PTH100",
     "PTH118",
     "PTH120",
+    "RUF005",
+    "RUF012",
+    "T201",
 ]
 unfixable = ["F401"]
