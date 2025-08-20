@@ -17,3 +17,21 @@ dependencies = [
     "typing-extensions==4.2.0",
     "wheel==0.41.1",
 ]
+
+[tool.ruff]
+exclude = ["migrations"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D100",
+    "D101",
+    "D103",
+    "D104",
+    "D105",
+    "DTZ011",
+    "PTH100",
+    "PTH118",
+    "PTH120",
+]
+unfixable = ["F401"]
